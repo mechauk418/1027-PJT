@@ -1,6 +1,10 @@
 from django.shortcuts import render,redirect
 from .models import User
 from .forms import CustomUserCreationForm
+from django.contrib.auth import login as auth_login
+from django.contrib.auth import logout as auth_logout
+from django.contrib.auth.forms import AuthenticationForm
+
 # Create your views here.
 
 def index(request):
@@ -26,3 +30,28 @@ def signup(request):
     }
 
     return render(request,'accounts/signup.html',context)
+
+def login(request):
+    if not request.user.is_authenticated:
+        if request.method == 'POST':
+            login_form = AuthenticationForm(request,data=request.POST)
+
+            if login_form.is_valid():
+                auth_login(request,login_form.get_user()
+                )
+                return redirect(request.GET.get('next') or 'accounts:index' )
+        else:
+            login_form = AuthenticationForm()
+
+        context = {
+            'login_form':login_form
+        }
+        return render(request,'accounts/login.html',context)
+
+    else:
+        return redirect('accounts:index')
+
+def logout(request):
+    auth_logout(request)
+
+    return redirect('accounts:index')

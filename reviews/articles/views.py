@@ -1,8 +1,4 @@
-import imp
-from symbol import arith_expr
 from django.shortcuts import render, redirect
-
-from reviews import articles
 from .models import Article, Comment
 # Create your views here.
 def index(request):
