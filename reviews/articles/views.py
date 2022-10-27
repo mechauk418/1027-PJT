@@ -21,7 +21,9 @@ def create(request):
     if request.method=='POST':
         form = ArticleForm(request.POST, request.FILES)
         if form.is_valid():
-            form.save()
+            forms = form.save(commit=False)
+            forms.user = request.user
+            forms.save()
             return redirect('articles:index')
     else:
         form = ArticleForm()
@@ -35,7 +37,9 @@ def update(request,review_pk):
     if request.method=='POST':
         form = ArticleForm(request.POST, request.FILES, instance=article)
         if form.is_valid():
-            form.save()
+            forms = form.save(commit=False)
+            forms.user = request.user
+            forms.save()
             return redirect('articles:detail', article.pk)
     else:
         form = ArticleForm(instance=article)

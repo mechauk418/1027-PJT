@@ -3,7 +3,9 @@
 
 {% block content %}
 {% if request.user.is_authenticated %}
-{{ request.user.username }}
+<a href ="{% url 'accounts:profile' user.pk %}"> {{ request.user.username }}
+</a>
+<br>
 <a href ="{% url 'accounts:logout' %}"> 로그아웃 </a>
 
 {% else %}

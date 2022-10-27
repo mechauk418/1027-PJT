@@ -1,9 +1,11 @@
-from django.shortcuts import render,redirect
+from django.shortcuts import render,redirect, get_object_or_404
 from .models import User
+from articles.models import Article, Comment
 from .forms import CustomUserCreationForm
 from django.contrib.auth import login as auth_login
 from django.contrib.auth import logout as auth_logout
 from django.contrib.auth.forms import AuthenticationForm
+from django.contrib.auth import get_user_model
 
 # Create your views here.
 
@@ -55,3 +57,11 @@ def logout(request):
     auth_logout(request)
 
     return redirect('accounts:index')
+
+def profile(request,pk):
+
+    user = get_object_or_404(get_user_model(), pk=pk)
+    context = {
+        'user': user
+    }
+    return render(request, 'accounts/profile.html', context)
