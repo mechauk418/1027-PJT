@@ -33,6 +33,7 @@
     </header>
     <main>
       <a href="{% url 'articles:index' %}" class='btn btn-primary'>홈</a>
+      <a href="{% url 'articles:create' %}" class='btn btn-primary'>글 작성</a>
       {% block content %}{% endblock content %}
     </main>
     <footer class="py-3" style="background-color: #e3f2fd;">

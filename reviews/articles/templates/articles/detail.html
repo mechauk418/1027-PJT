@@ -1,12 +1,11 @@
 {% extends 'base.html' %}
 {% block content %}
   <h1>
-    articles.detail.html</h1>
-  <a href="{% url 'articles:update' article.pk%}">수정하기</a>
-  <h1>
     {{ article.title }}
   </h1>
+  <a href="{% url 'articles:update' article.pk%}">수정하기</a>
   <p>{{article.user.username }}|{{ article.created_at}}|{{article.updated_at}}</p>
+  <p>{{article.content}}</p>
   {% if article.image %}
     <img src="" alt="">
   {% endif %}

@@ -1,12 +1,24 @@
 {% extends 'base.html' %}
 {% block content %}
-  <h1>
-    articles.index.html</h1>
-  <a href="{% url 'articles:create' %}">글 작성</a>
+  <h1 class='text-center'>
+    게시판</h1>
   {% for article in articles %}
-    <a href="{% url 'articles:detail' article.pk %}">
-      {{ article.title }}
-    </a>
-    |{{ article.user.username }}|{{ article.created_at}}
+    <div class="card" style="width: 18rem;">
+      <a href="{% url 'articles:detail' article.pk %}" class='text-decoration-none text-dark'>
+        {% if article.image %}
+          <img src="{{ article.image.url }}" alt="{{article.image}}" class="card-img-top">
+        {% else %}
+          <img src="https://via.placeholder.com/120x100" alt="" class="card-img-top">
+        {% endif %}
+        <div class="card-body">
+          <h5 class='card-title'>
+            {{ article.title }}
+          </h5>
+          <p>
+            |{{ article.user.username }}|{{ article.created_at}}
+          </p>
+        </div>
+      </a>
+    </div>
   {% endfor %}
 {% endblock content %}
