@@ -29,4 +29,17 @@ def create(request):
         'form' : form,
     }
     return render(request, 'articles/forms.html', context)
-        
+    
+def update(request,review_pk):
+    article = Article.objects.get(pk=review_pk)
+    if request.method=='POST':
+        form = ArticleForm(request.POST, request.FILES, instance=article)
+        if form.is_valid():
+            form.save()
+            return redirect('articles:detail', article.pk)
+    else:
+        form = ArticleForm(instance=article)
+    context = {
+        'form' : form,
+    }
+    return render(request, 'articles/forms.html', context)
