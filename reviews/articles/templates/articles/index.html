@@ -1,0 +1,8 @@
+{% extends 'base.html' %}
+{% block content %}
+  <h1>
+    articles.index.html</h1>
+  {% for article in articles %}
+    {{ article.title }}|{{ article.user.username }}|{{ article.created_at}}
+  {% endfor %}
+{% endblock content %}
