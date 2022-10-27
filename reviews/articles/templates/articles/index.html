@@ -2,6 +2,7 @@
 {% block content %}
   <h1>
     articles.index.html</h1>
+  <a href="{% url 'articles:create' %}">글 작성</a>
   {% for article in articles %}
     <a href="{% url 'articles:detail' article.pk %}">
       {{ article.title }}
