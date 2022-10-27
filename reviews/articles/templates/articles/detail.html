@@ -1,0 +1,12 @@
+{% extends 'base.html' %}
+{% block content %}
+  <h1>
+    articles.detail.html</h1>
+  <h1>
+    {{ article.title }}
+  </h1>
+  <p>{{article.user.username }}|{{ article.created_at}}|{{article.updated_at}}</p>
+  {% if article.image %}
+    <img src="" alt="">
+  {% endif %}
+{% endblock content %}
