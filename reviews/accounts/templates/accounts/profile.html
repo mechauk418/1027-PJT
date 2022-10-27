@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+{% load django_bootstrap5 %}
+
+{% block content %}
+
+<h1> {{user.username}} 님 프로필 </h1>
+
+<p> 글 목록 </p>
+
+
+{% for article in user.article_set.all %}
+{{article.title}}
+{% endfor %}
+
+
+<p> 댓글 목록 </p>
+
+{% for comment in user.comment_set.all %}
+{{ comment.content }}
+{% endfor %}
+
+{% endblock content %}

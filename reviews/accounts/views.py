@@ -55,3 +55,11 @@ def logout(request):
     auth_logout(request)
 
     return redirect('accounts:index')
+
+def profile(request,pk):
+
+    user = get_object_or_404(get_user_model(), pk=pk)
+    context = {
+        'user': user
+    }
+    return render(request, 'accounts/profile.html', context)
