@@ -3,6 +3,9 @@
   <h1>
     articles.index.html</h1>
   {% for article in articles %}
-    {{ article.title }}|{{ article.user.username }}|{{ article.created_at}}
+    <a href="{% url 'articles:detail' article.pk %}">
+      {{ article.title }}
+    </a>
+    |{{ article.user.username }}|{{ article.created_at}}
   {% endfor %}
 {% endblock content %}
