@@ -55,6 +55,18 @@ def update(request, article_pk):
     context = {
         "form": form,
     }
+    return render(request, 'articles/forms.html', context)
+
+def search(request):
+    if request.method=='POST':
+        searched = request.POST['searched']
+        articles = Article.objects.filter(name__contains=searched)
+        context = {
+            'searched' : searched,
+            'articles' : articles,
+        }
+        return render(request, 'articles/search.html', context)
+
     return render(request, "articles/forms.html", context)
 
 
@@ -90,3 +102,4 @@ def like(request, article_pk):
     else:
         article.like_users.add(request.user)
     return redirect("articles:detail", article_pk)
+
