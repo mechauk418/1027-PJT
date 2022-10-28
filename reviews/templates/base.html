@@ -32,9 +32,43 @@
       <!-- place navbar here -->
     </header>
     <main>
-      <a href="{% url 'articles:index' %}" class='btn btn-primary'>홈</a>
-      <a href="{% url 'articles:create' %}" class='btn btn-primary'>글 작성</a>
-      {% block content %}{% endblock content %}
+      <nav class="navbar navbar-expand-lg bg-light">
+        <div class="container-fluid">
+          <a class="navbar-brand" href="{% url 'articles:index' %}">{{ request.user}}</a>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+          </button>
+          <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+              <li class="nav-item">
+                <a class="nav-link active" aria-current="page" href="{% url 'articles:index' %}">Home</a>
+              </li>
+              {% if request.user.is_authenticated %}
+                <li class="nav-item">
+                  <a class="nav-link" href="{% url 'accounts:logout' %}">Logout</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="{% url 'articles:create' %}">글 작성</a>
+                </li>
+              {% else %}
+                <li class="nav-item">
+                  <a class="nav-link" href="{% url 'accounts:login' %}">Login</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="{% url 'accounts:signup' %}">Signup</a>
+                </li>
+              {% endif %}
+            </ul>
+            <form class="d-flex" role="search">
+              <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+              <button class="btn btn-outline-success" type="submit">Search</button>
+            </form>
+          </div>
+        </div>
+      </nav>
+      <div class="container">
+        {% block content %}{% endblock content %}
+      </div>
     </main>
     <footer class="py-3" style="background-color: #e3f2fd;">
       <p class="text-center mb-0 mb-2">
