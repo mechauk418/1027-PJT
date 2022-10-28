@@ -47,3 +47,13 @@ def update(request,review_pk):
         'form' : form,
     }
     return render(request, 'articles/forms.html', context)
+
+def search(request):
+    if request.method=='POST':
+        searched = request.POST['searched']
+        articles = Article.objects.filter(name__contains=searched)
+        context = {
+            'searched' : searched,
+            'articles' : articles,
+        }
+        return render(request, 'articles/search.html', context)
