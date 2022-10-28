@@ -6,48 +6,77 @@
 
   <div class="d-flex flex-column col-10">
     <div class="mx-3">
-      <h1 class="my-3">{{ user.username }}님의 프로필</h1>
-      <a class="" href="{% url 'accounts:update' %}">
-        회원 정보 수정
-      </a>
+      <div class="d-flex flex-row justify-content-between">
+        <div class="">
+          <h1 class="my-3">{{ user.username }}님의 프로필</h1>
+        </div>
+        <div class="">
+          {% if request.user == user %}
+            <a class='btn btn-outline-dark mx-4 my-3' href="{% url 'accounts:update' %}">
+              회원 정보 수정
+            </a>
+          {% endif %}
+        </div>
+      </div>
       <p>팔로우 :
         {{ user.followings.count }}
         | 팔로워 :
         {{ user.followers.count }}</p>
       {% if request.user != user %}
-        <a href="{% url 'accounts:follow' user.pk %}">
-          {% if request.user in user.followers.all %}
+
+        {% if request.user in user.followers.all %}
+          <a href="{% url 'accounts:follow' user.pk %}" class='btn btn-outline-danger'>
             팔로우 취소
-          {% else %}
+          </a>
+        {% else %}
+          <a href="{% url 'accounts:follow' user.pk %}" class='btn btn-outline-primary'>
             팔로우
-          {% endif %}
-        </a>
+          </a>
+        {% endif %}
       {% endif %}
+      <div class="">
+        <p class='fs-5'>
+          first name :
+          {{ user.first_name }}
+        </p>
+        <p class='fs-5'>
+          lastname :
+          {{ user.last_rname }}
+        </p>
+        <p class='fs-5'>
+          email :{{ user.email }}
+        </p>
+      </div>
+      <div class="my-5">
+        <h2>
+          글 목록
+        </h2>
+        <hr>
+        {% for article in user.article_set.all %}
+          <div class="d-flex">
+            <a href="{% url 'articles:detail' article.pk%}" style='margin-right: 15rem;' class='fs-5'>
+              {{article.title}}
+            </a>
+            <p>{{ article.created_at }}</p>
+          </div>
+        {% endfor %}
+      </div>
+      <div class="my-5">
+
+        <h2>
+          댓글 목록
+        </h2>
+        {% for comment in user.comment_set.all %}
+          <a href="{% url 'articles:detail' comment.article.pk%}" class='fs-5 text-decoration-none text-black'>
+            {{ comment.content }}
+          </a><br>
+        {% endfor %}
+      </div>
     </div>
-
   </div>
-
-  <p>
-    글 목록
-  </p>
-
-  {% for article in user.article_set.all %}
-    {{article.title}}
-  {% endfor %}
-
-  <p>
-    댓글 목록
-  </p>
-
-  {% for comment in user.comment_set.all %}
-    {{ comment.content }}
-  {% endfor %}
-
 {% endblock content %}
 
 {% block script %}
   <!-- <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script> <script> const form = document.querySelector('#follow-form') const csrftoken = document.querySelector('[name=csrfmiddlewaretoken]').value form.addEventListener('submit',function(event) { event.preventDefault() const userID = event.target.dataset.userID axios({ method: 'post', url: `/accounts/${userID}/follow/`, headers: {'X-CSRFToKen': csrftoken,} }) .then((response) => { const isFollowed = response.data.is_followed const followBtn = document.querySelector('#follow-form > input[type=submit]') if (isFollowed === true) { followBtn.value = '언팔로우' } else { followBtn.value = '팔로우' } const followersCountTag = document.querySelector('#followers-count') const followingsCountTag = document.querySelector('#followings-count') const followersCount = response.data.followers_count const followingsCount = response.data.followings_count followersCountTag.innerText = followersCount followingsCountTag.innerText = followingsCount }) .catch((error) => { console.log(error.response) }) }) -->
-
 </script>
-
 {% endblock script %}

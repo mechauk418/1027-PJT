@@ -43,7 +43,7 @@ def login(request):
             if login_form.is_valid():
                 auth_login(request,login_form.get_user()
                 )
-                return redirect(request.GET.get('next') or 'accounts:index' )
+                return redirect(request.GET.get('next') or 'articles:index' )
         else:
             login_form = AuthenticationForm()
 

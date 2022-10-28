@@ -1,4 +1,5 @@
 {% load django_bootstrap5 %}
+{% load static %}
 <!doctype html>
 <html lang="en">
 
@@ -11,19 +12,34 @@
     <!-- Bootstrap CSS v5.2.1 -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-iYQeCzEYFbKjA/T2uDLTpkwGzCiq6soy8tYaI1GyVh/UjpbCx/TYkiZhlZB6+fzT" crossorigin="anonymous">
     {% bootstrap_css %}
+    <link rel="stylesheet" href="{%static 'css/css.css' %}">
+
     <style>
       body,
       html {
         height: 100%;
+
       }
 
       body {
         display: flex;
         flex-direction: column;
+
+      }
+
+      a {
+        text-decoration: none;
+        color: black;
+      }
+
+      a:hover {
+        text-decoration: underline;
+        color: black;
       }
 
       main {
         flex: 1;
+        background-color: ghostwhite;
       }
     </style>
   </head>
@@ -71,7 +87,7 @@
           </div>
         </div>
       </nav>
-      <div class="container">
+      <div class="container my-5">
         {% block content %}{% endblock content %}
       </div>
     </main>
