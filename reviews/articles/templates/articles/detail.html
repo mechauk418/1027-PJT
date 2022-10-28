@@ -1,4 +1,7 @@
 {% extends 'base.html' %}
+{% load django_bootstrap5 %}
+{% bootstrap_css %}
+{% bootstrap_javascript %}
 {% block content %}
   <h1>
     {{ article.title }}
@@ -9,4 +12,36 @@
   {% if article.image %}
     <img src="" alt="">
   {% endif %}
+  {% if request.user.is_authenticated %}
+    <div class="my-2">
+      <a href="{% url 'articles:like' article.pk %}">
+        {% if request.user in article.like_users.all %}
+          <i class="bi bi-heart-fill"></i>
+        {% else %}
+          <i class="bi bi-heart"></i>
+        {% endif %}
+      </a>
+      <span>{{ article.like_users.count }}</span>
+      <form action="{% url 'articles:comment_create' article.pk %}" method="POST">
+        {% csrf_token %}
+        {% bootstrap_form comment_form %}
+        <input type="submit" value="댓글 작성">
+      </form>
+    </div>
+  {% endif %}
+  {% for comment in article.comment_set.all %}
+    <div class="d-flex">
+      <p>
+        {{comment.user.username}}
+        ||
+        {{comment.content}}
+      </p>
+      {% if request.user == comment.user %}
+        <form action="{% url 'articles:comment_delete' comment_pk %}">
+          {% csrf_token %}
+          <input type="submit" value="댓글 삭제">
+        </form>
+      {% endif %}
+    </div>
+  {% endfor %}
 {% endblock content %}
