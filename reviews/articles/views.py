@@ -60,15 +60,14 @@ def update(request, article_pk):
 def search(request):
     if request.method=='POST':
         searched = request.POST['searched']
-        articles = Article.objects.filter(name__contains=searched)
+        articles = Article.objects.filter(title__contains=searched)
         context = {
             'searched' : searched,
             'articles' : articles,
         }
         return render(request, 'articles/search.html', context)
-
-    return render(request, "articles/forms.html", context)
-
+    else:
+        return render(request, 'articles/search.html')
 
 # @login_required
 def comment_create(request, article_pk):
