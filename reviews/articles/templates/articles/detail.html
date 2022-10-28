@@ -3,7 +3,7 @@
   <h1>
     {{ article.title }}
   </h1>
-  <a href="{% url 'articles:update' article.pk%}">수정하기</a>
+  <a href="{% url 'articles:update' article.pk%}" class='text-end'>수정하기</a>
   <p>{{article.user.username }}|{{ article.created_at}}|{{article.updated_at}}</p>
   <p>{{article.content}}</p>
   {% if article.image %}
